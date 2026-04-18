@@ -20,7 +20,7 @@ Modelul este un Multilayer Perceptron implementat cu tensorflow.keras, cu urmato
 | Strat 3      | Dense            | 32 neuroni          | ReLU     |
 | Output       | Dense            | 10 neuroni          | Softmax  |
 
-Functia de activare ReLu a fost aleasa deoarece este cea mai buna functie la momentul de fata, deoarece elimina problema vanishing gradient si converge mai rapid fata de sigmoid sau tanh (desi datele noastre sunt intre 0 si 1). BatchNormalization normalizeaza activarile intre straturi, imbunatatind stabilitatea si viteza de antrenare.
+Functia de activare ReLu a fost aleasa deoarece elimina problema vanishing gradient si converge mai rapid fata de sigmoid sau tanh. BatchNormalization normalizeaza activarile intre straturi, imbunatatind stabilitatea si viteza de antrenare.
 Straturile de Dropout previn overfitting-ul prin dezactivarea aleatorie a neuronilor in faza de antrenare.
 Functia de activare Softmax a fost folosita in ultimul strat cu 10 neuroni (corespunde cu numarul de clase) deoarece alege clasa cu cea mai mare probabilitate (suma totala = 1).
 

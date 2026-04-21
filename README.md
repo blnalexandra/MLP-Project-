@@ -38,64 +38,75 @@ Functia de activare Softmax a fost folosita in ultimul strat cu 10 neuroni (core
 | Early Stopping (patience)    | 5 epoci                                                          |
 | Early Stopping (restore_best)| True — se restaureaza ponderile de la epoca cu cel mai mic val_loss |
 
-Ca si optimizator, am incercat Adam si SGD cu diferiti parametrii, dar diferenta dintre ele a fost extrem de mica, iar Adam default a avut cel mai bun rezultat. Functia de pierdere sparse_category_crossentropy este potrivita pentru clasificare multi-class cu etichete intregi. Early stopping opreste antrenarea atunci cand performanta pe setul de validare nu se imbunatateste timp de 5 epoci consecutive, prevenind overfitting-ul si reducand timpul de antrenare. Batch size = 16 a avut cel mai bun rezultat. 
+Ca si optimizator, am incercat Adam si SGD cu diferiti parametrii, dar diferenta dintre ele a fost extrem de mica, iar Adam default a avut cel mai bun rezultat. Functia de pierdere sparse_category_crossentropy este potrivita pentru clasificare multi-class cu etichete intregi. Early stopping opreste antrenarea atunci cand performanta pe setul de validare nu se imbunatateste timp de 10 epoci consecutive, prevenind overfitting-ul si reducand timpul de antrenare. Batch size = 16 a avut cel mai bun rezultat. 
 
 ### Modelul Final
-Dupa cross-validation, modelul final este antrenat pe intregul set de date de antrenare folosind aceeasi arhitectura. Numarul de epoci este stabilit 17 dupa ce am facut mediana fold-urilor. PCA este re-antrenat pe toate datele inainte de antrenarea modelului final.
+Dupa cross-validation, modelul final este antrenat pe intregul set de date de antrenare folosind aceeasi arhitectura. Numarul de epoci este stabilit 27 dupa ce am facut mediana fold-urilor. PCA este re-antrenat pe toate datele inainte de antrenarea modelului final.
 
 Evolutia antrenarii modelului final:
 
-| Epocă | Steps | Accuracy | Loss   |
-|------|-------|----------|--------|
-| 1    | 63/63 | 0.3294   | 2.1060 |
-| 2    | 63/63 | 0.7413   | 0.8440 |
-| 3    | 63/63 | 0.8491   | 0.5232 |
-| 4    | 63/63 | 0.8707   | 0.4313 |
-| 5    | 63/63 | 0.9005   | 0.3367 |
-| 6    | 63/63 | 0.8894   | 0.3457 |
-| 7    | 63/63 | 0.9276   | 0.2371 |
-| 8    | 63/63 | 0.9235   | 0.2468 |
-| 9    | 63/63 | 0.9428   | 0.1948 |
-| 10   | 63/63 | 0.9398   | 0.1605 |
-| 11   | 63/63 | 0.9326   | 0.2014 |
-| 12   | 63/63 | 0.9538   | 0.1574 |
-| 13   | 63/63 | 0.9646   | 0.1328 |
-| 14   | 63/63 | 0.9757   | 0.0934 |
-| 15   | 63/63 | 0.9658   | 0.1143 |
-| 16   | 63/63 | 0.9616   | 0.1191 |
-| 17   | 63/63 | 0.9740   | 0.1032 |
+| Epoca | Accuracy | Loss   |
+| ----- | -------- | ------ |
+| 1     | 0.2716   | 2.1584 |
+| 2     | 0.6889   | 1.1300 |
+| 3     | 0.7737   | 0.7688 |
+| 4     | 0.8562   | 0.5579 |
+| 5     | 0.8671   | 0.4192 |
+| 6     | 0.8949   | 0.3041 |
+| 7     | 0.9183   | 0.3139 |
+| 8     | 0.9314   | 0.2334 |
+| 9     | 0.9375   | 0.2128 |
+| 10    | 0.9296   | 0.2197 |
+| 11    | 0.9376   | 0.1993 |
+| 12    | 0.9364   | 0.2053 |
+| 13    | 0.9369   | 0.1950 |
+| 14    | 0.9607   | 0.1405 |
+| 15    | 0.9508   | 0.1447 |
+| 16    | 0.9475   | 0.1735 |
+| 17    | 0.9601   | 0.1268 |
+| 18    | 0.9472   | 0.1529 |
+| 19    | 0.9399   | 0.1476 |
+| 20    | 0.9530   | 0.1309 |
+| 21    | 0.9499   | 0.1547 |
+| 22    | 0.9686   | 0.1025 |
+| 23    | 0.9660   | 0.1017 |
+| 24    | 0.9660   | 0.1078 |
+| 25    | 0.9652   | 0.1055 |
+| 26    | 0.9717   | 0.0885 |
+| 27    | 0.9812   | 0.0693 |
 
-Modelul final atinge o acuratete de 97,40% pe setul complet de antrenare la epoca 17, cu o pierdere de 0.1032, demonstrand o convergenta buna fara semne de overfitting.
+
+Modelul final atinge o acuratete de 98,12% pe setul complet de antrenare la epoca 27, cu o pierdere de 0.0693, demonstrand o convergenta buna.
 
 ## 2. Rezultatele Validarii Incrucisate 10-fold
 
 ### Acuratetea pe fiecare fold
 
-| Fold | Acuratete | Epoca de oprire |
-|------|-----------|---------------------|
-| 1    | 0.9300 | 19   |
-| 2    | 0.9300 | 15  |
-| 3    | 0.9600 | 16   |
-| 4    | 0.8900 | 17   |
-| 5    | 0.8900 | 20   | 
-| 6    | 0.9400 | 17  | 
-| 7    | 0.8900 | 33   | 
-| 8    | 0.9400 | 16  |
-| 9    | 0.9500 | 23   | 
-| 10   | 0.9800 | 17  | 
-| MEDIE   | 0.9300 | 17(mediana)   |
+| Fold | Acuratețe | Epoca de oprire |
+| ---- | --------- | --------------- |
+| 1    | 0.9300    | 27              |
+| 2    | 0.9500    | 35              |
+| 3    | 0.9700    | 28              |
+| 4    | 0.8800    | 33              |
+| 5    | 0.8800    | 21              |
+| 6    | 0.9600    | 26              |
+| 7    | 0.8900    | 34              |
+| 8    | 0.9600    | 22              |
+| 9    | 0.9500    | 23              |
+| 10   | 0.9600    | 29              |
+| MEDIE   | 0.9330 | 27(mediana)   |
 
 ### Interval de Incredere 90%
 
 | Metrica | Valoare | 
 |---------|-----------|
-| Acuratete medie |0.9300 | 
-| Deviatie standard    | 0.0297 | 
-| Limita inf. CI 90%    | 0.9146 | 
-| Limita sup. CI 90%    | 0.9454 |
-| Interval de incredere 90%   | (0.9146, 0.9454) |  
+| Acuratete medie |0.9330 | 
+| Deviatie standard    | 0.0341 | 
+| Limita inf. CI 90%    | 0.9153 | 
+| Limita sup. CI 90%    | 0.9507 |
+| Interval de incredere 90%   | (0.9153, 0.9507) |  
 
-Intervalul (0.9146, 0.9454) indica faptul ca, cu o probabilitate de 90%, acuratetea reala a modelului pe date nevazute se afla in acest interval.
+Intervalul (0.9153, 0.9507) indica faptul ca, cu o probabilitate de 90%, acuratetea reala a modelului pe date nevazute se afla in acest interval.
 
 ## Concluzie
 Modelul implementat obtine o acuratete medie de 93% pe setul de antrenare evaluat prin 10-fold cross validation. Aceste rezultate demonstreaza o performanta destul de ridicata a modelului, cu doar 1000 de samples. 
